@@ -2,6 +2,7 @@
 
 import requests
 
+from stockfighter.stock import Stock
 
 VENUES_API = "https://api.stockfighter.io/ob/api/venues"
 
@@ -12,4 +13,16 @@ class Venue(object):
         self.name = name
         self.heartbeat = requests.get(
             "{}/{}/heartbeat"
-            .format(VENUES_API, name))
+            .format(VENUES_API, self.name))
+
+        if self.heartbeat.status_code == 200:
+            # "In general you can cache this for an entire level"
+            self.stocks = self._get_stocks()
+
+    def _get_stocks(self):
+        stocks = requests.get(
+            "{}/{}/stocks"
+            .format(VENUES_API, self.name)).json()
+        return [
+            Stock(self.name, details["name"], details["symbol"])
+            for details in stocks["symbols"]]

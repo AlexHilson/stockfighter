@@ -17,6 +17,10 @@ class TestExistingVenue(unittest.TestCase):
     def test_http_ok(self):
         self.assertEqual(self.venue.heartbeat.status_code, 200)
 
+    def test_stocks_list(self):
+        stocks = self.venue.stocks
+        self.assertEqual(stocks[0].symbol, "FOOBAR")
+
 
 class TestFakeVenue(unittest.TestCase):
 
