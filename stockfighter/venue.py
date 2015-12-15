@@ -3,8 +3,7 @@
 import requests
 
 from stockfighter.stock import Stock
-
-VENUES_API = "https://api.stockfighter.io/ob/api/venues"
+from stockfighter.config import VENUES_API
 
 
 class Venue(object):

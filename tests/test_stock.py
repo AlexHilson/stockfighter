@@ -25,3 +25,14 @@ class TestExistingStock(unittest.TestCase):
     def test_orderbook(self):
         orderbook = self.stock.orderbook()
         self.assertEqual(orderbook["venue"], self.venue)
+
+    def test_limit_buy(self):
+        account = "EXB123456"
+        price = 100
+        qty = 1
+        direction = "buy"
+        order_type = "limit"
+        order = self.stock.order(account, price, qty, direction, order_type)
+        self.assertEqual(order["price"], 100)
+        self.assertEqual(order["orderType"], "limit")
+        self.assertEqual(order["direction"], "buy")
