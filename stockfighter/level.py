@@ -6,19 +6,31 @@ from stockfighter.config import KEY, LEVELS_API, INSTANCES_API
 
 
 class Level(object):
-    def __init__(self, name):
-        self.name = name
-        self.authorization = {"X-Starfighter-Authorization": KEY}
-        self.details = requests.post(
-            "{}/{}".format(LEVELS_API, self.name),
-            headers=self.authorization).json()
-        if self.details["ok"] == True:
-            self.id = self.details["instanceId"]
-            self.account = self.details["account"]
-            self.venues = self.details["venues"]
-            self.tickers = self.details["tickers"]
+    def __init__(self,  details):
+        self.details = details
+        if details["ok"] == True:
+            self.details = details
+            self.name = details["name"]
+            self.instance_id = details["instanceId"]
+            self.account = details["account"]
+            self.venues = details["venues"]
+            self.tickers = details["tickers"]
+            self.instance = Instance(self.instance_id)
         else:
-            raise RuntimeError(self.details["error"])
+            raise RuntimeError(details["error"])
+
+    @staticmethod
+    def new_level(level_name):
+        authorization = {"X-Starfighter-Authorization": KEY}
+        details = requests.post(
+            "{}/{}".format(LEVELS_API, level_name),
+            headers=authorization).json()
+        return Level(details)
+
+class Instance(object):
+    def __init__(self, instance_id):
+        self.authorization = {"X-Starfighter-Authorization": KEY}
+        self.instance_id = instance_id
 
     def status(self):
         return requests.get(
