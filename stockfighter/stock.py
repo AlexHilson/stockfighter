@@ -13,6 +13,9 @@ class Stock(object):
         self.name = name
         self.symbol = symbol
 
+    def __repr__(self):
+        return "Stock(symbol={}, venue={})".format(self.symbol, self.venue)
+
     def orderbook(self):
         return requests.get(
             "{}/{}/stocks/{}"
