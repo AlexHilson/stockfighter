@@ -27,6 +27,7 @@ class Level(object):
             headers=authorization).json()
         return Level(details)
 
+
 class Instance(object):
     def __init__(self, instance_id):
         self.authorization = {"X-Starfighter-Authorization": KEY}

@@ -7,7 +7,6 @@ from stockfighter.config import VENUES_API
 
 
 class Venue(object):
-
     def __init__(self, name):
         self.name = name
         self.heartbeat = requests.get(

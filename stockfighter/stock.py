@@ -8,7 +8,6 @@ from stockfighter.config import VENUES_API, KEY
 
 
 class Stock(object):
-
     def __init__(self, venue, name, symbol):
         self.venue = venue
         self.name = name
@@ -21,7 +20,6 @@ class Stock(object):
         ).json()
 
     def order(self, account, price, qty, direction, order_type):
-
         data = json.dumps({
             "account": account,
             "price": price,
